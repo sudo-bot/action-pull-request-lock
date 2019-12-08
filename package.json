@@ -1,6 +1,6 @@
 {
     "name": "action-pull-request-lock",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Lock a pull-request",
     "main": "index.js",
     "repository": {
