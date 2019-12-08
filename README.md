@@ -6,9 +6,9 @@ This action locks a pull-request
 
 ```yml
   - name: lock pull request
-    uses: sudo-bot/action-pull-request-lock@v1
+    uses: sudo-bot/action-pull-request-lock@v1.0.1
     with:
-        github-token: ${{ secrets.WDES_BOT_TOKEN }}
-        number: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        number: ${{ github.event.pull_request.number }}
         lock_reason: resolved
 ```
