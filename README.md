@@ -10,5 +10,5 @@ This action locks a pull-request
     with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         number: ${{ github.event.pull_request.number }}
-        lock_reason: resolved
+        lock-reason: resolved
 ```

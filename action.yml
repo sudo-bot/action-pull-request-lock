@@ -8,7 +8,7 @@ inputs:
     number:
         description: "Pull Request number"
         required: true
-    lock_reason:
+    lock-reason:
         description: "The lock reason: off-topic,too heated,resolved,spam"
         default: "resolved"
 branding:
