@@ -14,7 +14,7 @@ const main = async () => {
     lock_reason: lock_reason,
     ...context.repo,
     ...context.owner,
-    number: number,
+    issue_number: number,
   })
 }
 
