@@ -1,7 +1,6 @@
 /.env
 /node_modules/**/*.md
 !/node_modules/**/LICENSE.*
-/node_modules/**/package.json
 /node_modules/**/.github
 /node_modules/**/.github
 /node_modules/**/.travis.yml
