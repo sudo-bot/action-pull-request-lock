@@ -1,2 +1,14 @@
 /.env
-/node_modules
+/node_modules/**/*.md
+!/node_modules/**/LICENSE.*
+/node_modules/**/package.json
+/node_modules/**/.github
+/node_modules/**/.github
+/node_modules/**/.travis.yml
+/node_modules/**/.npm*
+/node_modules/**/*.map
+/node_modules/**/*.d.ts
+/node_modules/**/test
+/node_modules/@types
+/node_modules/@octokit/types
+/node_modules/pump/test-*
