@@ -1,0 +1,19 @@
+name: "Lock pull-request"
+author: williamdes
+description: "Lock a pull-request when an event triggers the action"
+inputs:
+    github-token:
+        description: "GitHub Token"
+        required: true
+    number:
+        description: "Pull Request number"
+        required: true
+    lock_reason:
+        description: "The lock reason: off-topic,too heated,resolved,spam"
+        default: "resolved"
+branding:
+    icon: "git-pull-request"
+    color: blue
+runs:
+    using: "node12"
+    main: "index.js"
