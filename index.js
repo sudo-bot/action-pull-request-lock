@@ -1,16 +1,17 @@
 'use strict'
 
-const core = require('@actions/core')
-const { GitHub, context } = require('@actions/github')
+const core = require('@actions/core');
+const github = require('@actions/github');
 
 const main = async () => {
     const token = core.getInput('github-token');
     const lock_reason = core.getInput('lock-reason');
     const number = core.getInput('number');
 
-    const octokit = new GitHub(token);
+    const octokit = github.getOctokit(token);
+    const context = github.context;
 
-    await octokit.issues.lock({
+    await octokit.rest.issues.lock({
         lock_reason: lock_reason,
         ...context.repo,
         ...context.owner,
