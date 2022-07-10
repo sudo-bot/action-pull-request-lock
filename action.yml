@@ -11,6 +11,7 @@ inputs:
     lock-reason:
         description: "The lock reason: off-topic,too heated,resolved,spam"
         default: "resolved"
+        required: false
 branding:
     icon: "git-pull-request"
     color: blue
