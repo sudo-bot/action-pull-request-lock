@@ -9,12 +9,12 @@ inputs:
         description: "Pull Request number"
         required: true
     lock-reason:
-        description: "The lock reason: off-topic,too heated,resolved,spam"
+        description: "The lock reason: off-topic, too heated, resolved, spam"
         default: "resolved"
         required: false
 branding:
-    icon: "git-pull-request"
+    icon: "lock"
     color: blue
 runs:
-    using: "node16"
-    main: "index.js"
+    using: "docker"
+    image: "docker://ghcr.io/sudo-bot/action-pull-request-lock:latest"
