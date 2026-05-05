@@ -48,3 +48,19 @@ jobs:
    specified reason.
 3. If the API call fails, the action exits with a non-zero code and prints
    an error message.
+
+## Gitea (self-hosted) support
+
+The action also runs on [Gitea Actions](https://docs.gitea.com/usage/actions/overview).
+Detection is automatic: when the runner sets `GITEA_ACTIONS=true` (or
+`GITHUB_API_URL` ends in `/api/v1`), the action talks to Gitea's REST
+API instead of GitHub's. Gitea's lock endpoint
+(`PUT /repos/{o}/{r}/issues/{n}/lock` with `{ "lock_reason": "..." }`)
+is wire-compatible with GitHub's, so **the workflow above works
+unchanged** — no separate example needed. The same `lock-reason` values
+apply.
+
+The only practical caveat is image distribution: your Gitea runner
+must be able to pull `ghcr.io/sudo-bot/action-pull-request-lock:latest`.
+If the runner is restricted to a private registry, mirror the image
+there.
