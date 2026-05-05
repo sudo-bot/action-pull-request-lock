@@ -4,7 +4,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v2.1.0] - 2026-05-05
+## [v2.0.0] - 2026-05-05
+
+The `v2` marketplace tag is moving — this entry covers everything in it
+as of today, from the original Rust rewrite (initially released
+2026-04-22) through the Gitea support added 2026-05-05.
+
+### Changed
+- **Action rewritten in Rust.** The action is now a single Rust binary
+  shipped as a Docker container action and no longer requires a Node.js
+  runtime on the runner. API calls go through
+  [`octocrab`](https://crates.io/crates/octocrab). The user-facing
+  inputs surface (`github-token`, `number`, `lock-reason`) is unchanged.
+- Distribution moved to GitHub Container Registry
+  (`ghcr.io/sudo-bot/action-pull-request-lock`), published on the
+  `latest` tag in addition to versioned tags.
+- `StdoutLogger` is now a type alias for a generic
+  `WriteLogger<W: Write>`, letting tests verify the exact bytes
+  emitted (workflow command prefixes and escape pass) instead of just
+  trusting `println!`.
 
 ### Added
 - Gitea self-hosted support. The action auto-detects Gitea Actions
@@ -20,11 +38,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - README section noting Gitea support and the ghcr.io reachability
   caveat for self-hosted runners.
 
-### Changed
-- `StdoutLogger` is now a type alias for a generic
-  `WriteLogger<W: Write>`, letting tests verify the exact bytes
-  emitted (workflow command prefixes and escape pass) instead of just
-  trusting `println!`.
+### Fixed
+- A 204 No Content response from the GitHub lock endpoint no longer
+  causes a JSON deserialisation error. The client uses the low-level
+  `_put` helper and checks the status manually.
 
 ### Internal
 - Histories merged with the action-pull-request-merge sister project so
@@ -40,23 +57,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   the `lock_reason` body, `Authorization` header presence, 4xx
   propagation).
 - Test count grew from 13 to 36.
-
-## [v2.0.0] - 2026-04-22
-
-### Changed
-- **Action rewritten in Rust.** The action is now a single Rust binary
-  shipped as a Docker container action and no longer requires a Node.js
-  runtime on the runner. API calls go through
-  [`octocrab`](https://crates.io/crates/octocrab). The user-facing
-  inputs surface (`github-token`, `number`, `lock-reason`) is unchanged.
-- Distribution moved to GitHub Container Registry
-  (`ghcr.io/sudo-bot/action-pull-request-lock`), published on the
-  `latest` tag in addition to versioned tags.
-
-### Fixed
-- A 204 No Content response from the GitHub lock endpoint no longer
-  causes a JSON deserialisation error. The client uses the low-level
-  `_put` helper and checks the status manually.
 
 ## [v1.2.0] - 2022-07-10
 
@@ -97,7 +97,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - First stable version.
 
-[v2.1.0]: https://github.com/sudo-bot/action-pull-request-lock/compare/v1.2.0...v2
+[v2.0.0]: https://github.com/sudo-bot/action-pull-request-lock/compare/v1.2.0...v2
 [v1.2.0]: https://github.com/sudo-bot/action-pull-request-lock/compare/v1.1.1...v1.2.0
 [v1.1.1]: https://github.com/sudo-bot/action-pull-request-lock/compare/v1.1.0...v1.1.1
 [v1.1.0]: https://github.com/sudo-bot/action-pull-request-lock/compare/v1.0.5...v1.1.0
