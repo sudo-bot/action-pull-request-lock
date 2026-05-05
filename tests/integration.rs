@@ -37,6 +37,7 @@ fn ctx() -> GithubContext {
         owner: "octo".into(),
         repo: "widget".into(),
         api_base_url: "https://api.github.com".into(),
+        is_gitea: false,
     }
 }
 
