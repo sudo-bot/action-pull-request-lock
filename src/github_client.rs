@@ -48,18 +48,25 @@ impl GithubClient for OctocrabClient {
         lock_reason: &str,
     ) -> Result<()> {
         let route = format!("/repos/{}/{}/issues/{}/lock", owner, repo, issue_number);
-        let body = serde_json::json!({ "lock_reason": lock_reason });
-        let response = self.inner._put(route, Some(&body)).await.with_context(|| {
-            format!(
-                "failed to lock issue #{} with reason '{}'",
-                issue_number, lock_reason
+        let response = self
+            .inner
+            ._put(
+                route.clone(),
+                Some(&serde_json::json!({ "lock_reason": lock_reason })),
             )
-        })?;
+            .await
+            .with_context(|| {
+                format!(
+                    "failed to send lock for issue #{} (PUT {}) with reason '{}'",
+                    issue_number, route, lock_reason
+                )
+            })?;
         let status = response.status();
         if !status.is_success() {
             anyhow::bail!(
-                "failed to lock issue #{} with reason '{}': unexpected status {}",
+                "failed to lock issue #{} (PUT {}) with reason '{}': unexpected status {}",
                 issue_number,
+                route,
                 lock_reason,
                 status
             );
@@ -110,6 +117,12 @@ mod tests {
         assert!(
             msg.contains("failed to lock issue #42"),
             "unexpected error: {msg}"
+        );
+        // The URL path must be present so a 405 / 404 from a misconfigured
+        // GitHub Enterprise instance is diagnosable without re-running.
+        assert!(
+            msg.contains("/repos/octo/widget/issues/42/lock"),
+            "expected URL path in error for diagnostics: {msg}"
         );
     }
 }
